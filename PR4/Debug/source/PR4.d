@@ -8,8 +8,10 @@ source/PR4.o source/PR4.d: ../source/PR4.c ../board/board.h \
  ../board/pin_mux.h ../board/clock_config.h ../CMSIS/MKL25Z4.h \
  ../utilities/fsl_debug_console.h ../board/events.h ../board/TMP102.h \
  ../board/led_board.h ../board/board.h ../board/peripherals.h \
- ../board/pin_mux.h ../board/led_board.h ../board/TMP102.h \
- ../board/loggers.h
+ ../board/pin_mux.h ../board/loggers.h ../board/Testsuite.h \
+ ../board/uCUnit-v1.0.h ../board/System.h ../board/led_board.h \
+ ../board/TMP102.h ../board/loggers.h ../board/Testsuite.h \
+ ../board/uCUnit-v1.0.h ../board/System.h
 
 ../board/board.h:
 
@@ -61,8 +63,22 @@ source/PR4.o source/PR4.d: ../source/PR4.c ../board/board.h \
 
 ../board/pin_mux.h:
 
+../board/loggers.h:
+
+../board/Testsuite.h:
+
+../board/uCUnit-v1.0.h:
+
+../board/System.h:
+
 ../board/led_board.h:
 
 ../board/TMP102.h:
 
 ../board/loggers.h:
+
+../board/Testsuite.h:
+
+../board/uCUnit-v1.0.h:
+
+../board/System.h:

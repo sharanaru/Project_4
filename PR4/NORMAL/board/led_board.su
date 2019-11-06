@@ -1,0 +1,9 @@
+fsl_gpio.h:157:20:GPIO_WritePinOutput	24	static
+fsl_gpio.h:175:20:GPIO_SetPinsOutput	16	static
+fsl_gpio.h:186:20:GPIO_ClearPinsOutput	16	static
+led_board.c:4:6:delay	24	static
+led_board.c:14:6:LED_Initialise	8	static
+led_board.c:20:6:ALLLED_OFF	8	static
+led_board.c:26:6:LED_PASS	8	static
+led_board.c:32:6:LED_PROCESS	8	static
+led_board.c:38:6:LED_FAIL	8	static

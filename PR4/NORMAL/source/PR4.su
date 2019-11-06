@@ -1,0 +1,6 @@
+PR4.c:32:6:init	8	static
+PR4.c:38:6:post	8	static
+PR4.c:44:6:statemachine1	8	static
+PR4.c:77:6:statemachine2	8	static
+PR4.c:89:5:main	8	static
+PR4.c:139:6:PORTA_IRQHandler	8	static

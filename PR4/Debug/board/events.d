@@ -6,7 +6,8 @@ board/events.o board/events.d: ../board/events.c ../board/events.h \
  ../CMSIS/core_cmFunc.h ../CMSIS/system_MKL25Z4.h \
  ../CMSIS/MKL25Z4_features.h ../drivers/fsl_clock.h \
  ../drivers/fsl_common.h ../drivers/fsl_gpio.h ../board/peripherals.h \
- ../board/pin_mux.h ../CMSIS/MKL25Z4.h ../board/loggers.h
+ ../board/pin_mux.h ../CMSIS/MKL25Z4.h ../board/loggers.h \
+ ../board/Testsuite.h ../board/uCUnit-v1.0.h ../board/System.h
 
 ../board/events.h:
 
@@ -49,3 +50,9 @@ board/events.o board/events.d: ../board/events.c ../board/events.h \
 ../CMSIS/MKL25Z4.h:
 
 ../board/loggers.h:
+
+../board/Testsuite.h:
+
+../board/uCUnit-v1.0.h:
+
+../board/System.h:

@@ -4,75 +4,32 @@
 
 statetypes disconnectcheck()
 {
-	while(disconnect1())
+	while(disconnect1()) //if sensor disconnected program keeps printing discoonect and needs a reset to setup again
 	{
-	printf("Sensor disconnected");
-	LED_FAIL();
+		printf("\nSensor disconnected\n");
+		LED_FAIL();//red led up
 	}
-	return temp_reading;
+	return temp_reading;//if not disconnected goes to next state
 }
 int gettemp()
 {
-	LED_PASS();
-	reading=I2C_Read(TEMP_REG);
-	//sumtemp+=reading;
+	LED_PASS();//grren led on
+	reading=I2C_Read(TEMP_REG);//performs i2c read of temp register
+
 	return 0;
 }
 int disablealert()
 {
-	PORTA->PCR[4] |= PORT_PCR_ISF_MASK; //PORT_ISFR_ISF(0x40);
+	PORTA->PCR[4] |= PORT_PCR_ISF_MASK; //masks interrupt flag
 
-	NVIC->ICER[0] |=(1<<PORTA_IRQn);
+	NVIC->ICER[0] |=(1<<PORTA_IRQn);//disables interrupt
 	return 0;
 }
-int timeout()
-{
-	LED_PASS();
-	disablealert();
-	if(timeoutcounter<5)
-	{
-		logstate(state);
-		sumtemp=sumtemp+reading;
-		logtemp(reading);
-		//printf(reading);
-		avgtemp=(sumtemp)/timeoutcounter;
-		//printf(avgtemp);
-		logavgtemp(avgtemp);
-		timerfor15s();
 
-		timeoutcounter++;
-		printf("timeout value is %d\n",timeoutcounter);
-	}
-	else
-	{
-		sm2=0;
-		sm1=1;
-		printf("sm1 %d\n",sm1);
-		sumtemp=0;avgtemp=0;
-	}
-	enablealert();
-	return 0;
-}
-//statetypes complete(statetypes state)
-//{
-//
-//
-//	if(state==disconnect)
-//		return temp_reading;
-//	if(state==temp_reading)
-//		return average;
-//	if(state==temp_alert)
-//		return average;
-//	if((state==average) && (timeoutcounter<6))
-//	{
-//		return temp_reading;
-//
-//	}
-//
-//}
-int timerfor15s()
+
+int timerfor15s() //approx. 15s timer
 {  volatile uint64_t i=0; //34500000
-while(i!=345000) //holds execution till delay is achieved
+while(i!=31500000) //holds execution till delay is achieved
 {
 	__asm("NOP");
 	i++;
@@ -81,8 +38,8 @@ return 0;
 }
 int enablealert()
 {
-	PORTA->PCR[4] |= PORT_PCR_ISF_MASK;
-	NVIC->ISER[0] |= (1<<PORTA_IRQn);
+	PORTA->PCR[4] |= PORT_PCR_ISF_MASK; //handles flag
+	NVIC->ISER[0] |= (1<<PORTA_IRQn);//sets interrupot
 
 	return 0;
 }
@@ -91,40 +48,42 @@ statetypes temp_readinghandler()
 	if(disconnect1())
 		return disconnect;
 	else
-	{   enablealert();
-		logstate(state);
-		gettemp();
-		return average;
+	{
+	enablealert();//enables interrupt
+	LED_PASS();//green led on
+	logstate(state);//displays state
+	gettemp();//reads temp
+	return average;//next state transition
 	}
 
 }
 
 statetypes average_handler()
 {
-	disablealert();
+	disablealert();//disables interrupt
 	if(disconnect1())
 		return disconnect;
 	else
 	{
-		if(timeoutcounter<5)
-		{   LED_PASS();
-			logstate(state);
-			sumtemp=sumtemp+reading;
-			logtemp(reading);
-			avgtemp=(sumtemp)/timeoutcounter;
-			logavgtemp(avgtemp);
-			timerfor15s();
-			timeoutcounter++;
+		if(timeoutcounter<5) //when 4 timeouts havent occured
+		{   LED_PASS();//green led on
+		logstate(state);//displays state
+		sumtemp=sumtemp+reading; //calculates sum of temperatures in present statemachine
+		logtemp(reading); //prints current reading
+		avgtemp=(sumtemp)/timeoutcounter;//calculates average of temperatures recorded
+		logavgtemp(avgtemp);//prints average temperature
+		timerfor15s();//15second delay
+		timeoutcounter++;//increments timeout counter
 
 		}
-		else
+		else //if 4 timeouts have occured
 		{
-			timeoutcounter=1;
-			sumtemp=0;
-			if(sm1)
+			timeoutcounter=1; //resets counter value
+			sumtemp=0; //clears sum of temperatures
+			if(sm1) //switches statemachine
 			{
-			sm1=0;
-			sm2=1;
+				sm1=0;
+				sm2=1;
 			}
 			else if(sm2)
 			{
@@ -133,19 +92,23 @@ statetypes average_handler()
 			}
 
 		}
-	return temp_reading;
+		return temp_reading; //next state is temp_reading
 	}
 }
-statetypes alert_handler()
+statetypes alert_handler() //alert state handler
 {
-	disablealert();
-	gettemp();
-	LED_PROCESS();
-	if(disconnect1())
+	disablealert(); //disables interrupt to prevent another interrupt from firing
+
+	LED_PROCESS(); //lights blue led on
+
+	if(disconnect1()) //if sensor disconnected
 		return disconnect;
-	else
+	else//if sensor not disconnected go back to average state
 	{
 		logstate(state);
+		gettemp();// reads temp
+		// to show led on
+
 		return average;
 	}
 }

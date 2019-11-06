@@ -1,16 +1,12 @@
-/*
- * TMP102.c
- *
- *  Created on: 29-Oct-2019
- *      Author: Hp
- */
-
+//For I@C read, write functions, Contains port initilisation too.
+//Authors -Abhijeet, Sharan
+//I2c functions derived from Prof.Montgomery's I2c examples
 #include "TMP102.h"
 #include "MKL25Z4.h"
 #include <fsl_debug_console.h>
 #include <stdint.h>
 
-void pause(void)
+void pause(void) //small delay to get I2C lines to settle
 {
 	uint32_t n = 100000;
 	while(n!=0)
@@ -137,16 +133,12 @@ int8_t I2C_Read(uint8_t read_reg)
 	I2C0->C1 |= I2C_C1_TXAK_MASK;						// NACK
 	I2C0->C1 &= ~I2C_C1_MST_MASK;					//MASTER STOP
 
-	//buffer = ((data[0]<<8) + (data[1]));
-	//PRINTF("\n\r%d   %d",read_reg,data[0]);
-	//PRINTF("\n\r%d   %d",read_reg,data[1]);
 
-	//return buffer;
 
 	return data0;
 }
 
-// Some function for ALERT Pin on PTC16 GPIO pin
+
 
 
 
@@ -185,20 +177,8 @@ void All_Init(void)
 		pause();
 		I2C_Transmit(TEMP_LOW_REG, 29 , TLOW_2); // Set Temperature Low Register
 		pause();
-	    NVIC->ISER[0] |= (1<<PORTA_IRQn);
+	    NVIC->ISER[0] |= (1<<PORTA_IRQn);//enabling interrupt after setting temp high,low temperatures
 
 }
 
 
-/* void Enable_irq (int irq)
-    {
-        //Make sure that the IRQ is an allowable number. Up to 32 is used.
-         // NOTE: If you are using the interrupt definitions from the header
-         //file, you MUST SUBTRACT 16!!!
-         //
-
-          // Set the ICPR and ISER registers accordingly
-          NVIC_TYPE->ICPR |= 1 << (irq%32);
-          NVIC_TYPE->ISER |= 1 << (irq%32);
-    }
- */
