@@ -1,0 +1,9 @@
+events.c:5:12:disconnectcheck	8	static
+events.c:14:5:gettemp	8	static
+events.c:21:5:disablealert	8	static
+events.c:28:5:timeout	8	static
+events.c:73:5:timerfor15s	24	static
+events.c:82:5:enablealert	8	static
+events.c:89:12:temp_readinghandler	8	static
+events.c:102:12:average_handler	8	static
+events.c:139:12:alert_handler	8	static

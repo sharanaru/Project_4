@@ -1,0 +1,6 @@
+TMP102.c:13:6:pause	16	static
+TMP102.c:22:6:I2C_Init	8	static
+TMP102.c:57:6:I2C_Transmit	32	static
+TMP102.c:93:8:I2C_Read	24	static
+TMP102.c:153:5:disconnect1	24	static
+TMP102.c:168:6:All_Init	8	static
