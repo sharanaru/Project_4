@@ -27,18 +27,27 @@ void LED_PASS()
 {
 ALLLED_OFF();
 LED_GREEN_ON();
+#ifdef ddebug
+printf("led green on");
+#endif
 delay();
 }
 void LED_PROCESS()
 {
 ALLLED_OFF();
 LED_BLUE_ON();
+#ifdef ddebug
+printf("led blue on");
+#endif
 delay();
 }
 void LED_FAIL()
 {
 	ALLLED_OFF();
 	LED_RED_ON();
+#ifdef ddebug
+printf("led red on");
+#endif
 	delay();
 }
 
