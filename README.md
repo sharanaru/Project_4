@@ -22,9 +22,10 @@ arm-none-eabi-gcc -D__REDLIB__ -DCPU_MKL25Z128VLK4 -DCPU_MKL25Z128VLK4_cm0plus -
 + MCU XPRESSO Project Directory
      + Board Folder: Contains regular board files plus
 	    + events.h/.c: These contain the state machine functions
-		+ led_board.h/.c These contain the LED functions
-	    + TMP102.h/.c These contain the I2C functions 
-	    + System .h/.c, Testsuite.h/.c, uCUnit-v1.0 These are the files needed for running                  the unit tests  
+	    + led_board.h/.c These contain the LED functions
+	    + TMP102.h/.c These contain the I2C functions
+	    + loggers.h Containing logger macros 
+	    + System .h/.c, Testsuite.h/.c, uCUnit-v1.0 These are the files needed for running the unit tests  
      + Source Folder - Contains main routine - PR4.c
 	
      + Default folders with no change -CMSIS,startup,drivers,utilities
