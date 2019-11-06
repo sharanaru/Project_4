@@ -1,9 +1,8 @@
 
 
-/**
- * @file    PR4.c
- * @brief   Application entry point.
- */
+//main routine PES PRoject 4-
+//SHaran Arumugam and Abhijeet
+
 #include <stdio.h>
 #include "board.h"
 #include "peripherals.h"
